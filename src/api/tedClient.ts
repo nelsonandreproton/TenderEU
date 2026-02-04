@@ -920,6 +920,11 @@ export class TedApiClient {
       filtered = mockData.filter((t) => countries.includes(t.countryCode));
     }
 
+    // Filter by max value
+    filtered = filtered.filter(
+      (t) => !t.estimatedValue || t.estimatedValue.amount <= this.maxValueEur
+    );
+
     return filtered.slice(0, limit);
   }
 }

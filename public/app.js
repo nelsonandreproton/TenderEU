@@ -5,6 +5,7 @@ const API_BASE = '';
 // DOM Elements
 const countrySelect = document.getElementById('country-select');
 const limitSelect = document.getElementById('limit-select');
+const maxValueInput = document.getElementById('max-value-input');
 const searchBtn = document.getElementById('search-btn');
 const loadingEl = document.getElementById('loading');
 const errorEl = document.getElementById('error');
@@ -41,6 +42,7 @@ async function handleSearch() {
     .map(opt => opt.value)
     .filter(Boolean);
   const limit = limitSelect.value;
+  const maxValue = maxValueInput.value || '500000';
 
   showLoading();
   hideError();
@@ -52,6 +54,7 @@ async function handleSearch() {
       params.append('countries', selectedCountries.join(','));
     }
     params.append('limit', limit);
+    params.append('maxValue', maxValue);
 
     const response = await fetch(`${API_BASE}/api/tenders?${params}`);
 
