@@ -31,7 +31,10 @@ app.get("/api/tenders", async (req, res) => {
     const maxValueParam = req.query.maxValue as string | undefined;
 
     const countries = countriesParam
-      ? countriesParam.split(",").filter((c) => c.trim())
+      ? countriesParam
+          .split(",")
+          .map((c) => c.trim().toUpperCase())
+          .filter((c) => /^[A-Z]{2}$/.test(c))
       : [];
     const limit = limitParam ? parseInt(limitParam, 10) : 10;
     const maxValue = maxValueParam

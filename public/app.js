@@ -28,7 +28,7 @@ async function loadCountries() {
     const countries = await response.json();
 
     countrySelect.innerHTML = countries
-      .map(c => `<option value="${c.code}">${c.name}</option>`)
+      .map(c => `<option value="${escapeHtml(c.code)}">${escapeHtml(c.name)}</option>`)
       .join('');
   } catch (error) {
     console.error('Failed to load countries:', error);
@@ -103,7 +103,7 @@ function renderTenderCard(tender, index) {
   const deadlineClass = isDeadlineUrgent(tender.deadline) ? 'deadline-urgent' : '';
 
   const cpvTags = tender.cpvCodes.slice(0, 3).map(cpv =>
-    `<span class="tag tag-cpv" title="${cpv.description}">${cpv.code}</span>`
+    `<span class="tag tag-cpv" title="${escapeHtml(cpv.description)}">${escapeHtml(cpv.code)}</span>`
   ).join('');
 
   const requirementsHtml = renderRequirements(tender.requirements, index);
@@ -123,7 +123,7 @@ function renderTenderCard(tender, index) {
           </span>
           <span class="tender-meta-item">
             <span>📋</span>
-            ${tender.contractType || 'Services'}
+            ${escapeHtml(tender.contractType || 'Services')}
           </span>
         </div>
       </header>
@@ -153,7 +153,7 @@ function renderTenderCard(tender, index) {
             </div>
           ` : ''}
         </div>
-        <a href="${tender.tedUrl}" target="_blank" rel="noopener" class="tender-link">
+        <a href="${sanitizeUrl(tender.tedUrl)}" target="_blank" rel="noopener" class="tender-link">
           View on TED
           <span>↗</span>
         </a>
@@ -263,6 +263,20 @@ function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
+}
+
+function sanitizeUrl(url) {
+  if (!url) return '#';
+  try {
+    const parsed = new URL(url);
+    // Only allow https URLs to ted.europa.eu
+    if (parsed.protocol === 'https:' && parsed.hostname.endsWith('ted.europa.eu')) {
+      return url;
+    }
+    return '#';
+  } catch {
+    return '#';
+  }
 }
 
 // Initialize on DOM ready
