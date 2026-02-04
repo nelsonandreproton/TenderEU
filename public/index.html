@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TenderEU - EU Software Development Tenders</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="logo">
+          <span class="logo-icon">🇪🇺</span>
+          TenderEU
+        </h1>
+        <p class="tagline">Find EU Public Software Development Tenders</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+      <section class="filters-section">
+        <div class="filters-card">
+          <h2>Search Filters</h2>
+          <div class="filters-grid">
+            <div class="filter-group">
+              <label for="country-select">Country</label>
+              <select id="country-select" multiple>
+                <option value="">Loading countries...</option>
+              </select>
+              <small>Hold Ctrl/Cmd to select multiple countries</small>
+            </div>
+            <div class="filter-group">
+              <label for="limit-select">Results</label>
+              <select id="limit-select">
+                <option value="5">5 tenders</option>
+                <option value="10" selected>10 tenders</option>
+                <option value="20">20 tenders</option>
+                <option value="50">50 tenders</option>
+              </select>
+            </div>
+            <div class="filter-info">
+              <div class="info-badge">
+                <span class="info-icon">💰</span>
+                <span>Max Value: €500,000</span>
+              </div>
+              <div class="info-badge">
+                <span class="info-icon">💻</span>
+                <span>Software Development Only</span>
+              </div>
+            </div>
+          </div>
+          <button id="search-btn" class="btn-primary">
+            <span class="btn-icon">🔍</span>
+            Search Tenders
+          </button>
+        </div>
+      </section>
+
+      <section class="results-section">
+        <div class="results-header">
+          <h2>Available Tenders</h2>
+          <span id="results-count" class="results-count"></span>
+        </div>
+        <div id="loading" class="loading hidden">
+          <div class="spinner"></div>
+          <p>Searching for tenders...</p>
+        </div>
+        <div id="error" class="error hidden"></div>
+        <div id="tenders-list" class="tenders-list"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Data sourced from <a href="https://ted.europa.eu" target="_blank" rel="noopener">TED - Tenders Electronic Daily</a></p>
+      <p class="disclaimer">This tool searches for EU public procurement notices for software development projects under €500,000.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
